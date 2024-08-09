@@ -1,18 +1,16 @@
 const ArrayList = JSON.parse(localStorage.getItem('ArrayList')) || [];
-let Income = parseFloat(localStorage.getItem('Income')) || 0; 
+let Income = parseFloat(localStorage.getItem('Income')) || 0;
 
 function RenderArrayList() {
     let todoListHTML = '';
-    let Total = 0; 
-    let Remainder = 0;
+    let Total = 0;
 
-    
     for (let i = 0; i < ArrayList.length; i++) {
         const todoObject = ArrayList[i];
-        const CatName = todoObject.Category; 
-        const DueAmount = todoObject.Amount; 
-        const Notes = todoObject.Notes; 
-        const Date = todoObject.DueDate; 
+        const CatName = todoObject.Category;
+        const DueAmount = todoObject.Amount;
+        const Notes = todoObject.Notes;
+        const Date = todoObject.DueDate;
 
         const html = `
             <div class="GridObjectList">${CatName}</div>
@@ -23,33 +21,27 @@ function RenderArrayList() {
         `;
         todoListHTML += html;
 
-        Total += parseFloat(DueAmount) || 0; 
+        Total += parseFloat(DueAmount) || 0;
     }
+
+    const Remainder = Income - Total;
 
     document.querySelector('.NewItemList').innerHTML = todoListHTML;
     document.querySelector('.ResultExpenseTotal').innerHTML = `<p>Total: ${Total}</p>`;
-   
-    Remainder = Income - Total; 
-    if (Remainder >= 0) {
-        document.querySelector('.ResultRemainder').innerHTML = `<p>Remaining: ${Remainder}</p>`;
-    } else {
-        const overBudgetAmount = Math.abs(Remainder); 
-        document.querySelector('.ResultRemainder').innerHTML = `<p>Remaining: <span class="RedColour">${Remainder} is ${overBudgetAmount} Over Budget</span></p>`;
-    }
-    
-   
-    document.querySelector('.ResultBudget').innerHTML = `<p>Budget: ${Income}</p>`; 
+    document.querySelector('.ResultBudget').innerHTML = `<p>Budget: ${Income}</p>`;
+    document.querySelector('.ResultRemainder').innerHTML = Remainder >= 0 
+        ? `<p>Remaining: ${Remainder}</p>` 
+        : `<p>Remaining: <span class="RedColour">${Remainder} is ${Math.abs(Remainder)} Over Budget</span></p>`;
 }
 
 function AddIncome() {
     let IncomeInput = document.querySelector('.InputSum');
-    Income = parseFloat(IncomeInput.value) || 0; 
-    console.log(Income);
-    IncomeInput.value = ''; 
-    
+    Income = parseFloat(IncomeInput.value) || 0;
+    IncomeInput.value = '';
+
     localStorage.setItem('Income', Income);
 
-    RenderArrayList(); 
+    RenderArrayList();
 }
 
 function InputselectedAll() {
@@ -57,26 +49,42 @@ function InputselectedAll() {
     const Categoryname = CategoryInput.value;
 
     const AmountInput = document.querySelector('.InputExpense');
-    const AmountDue = AmountInput.value;
+    const AmountDue = parseFloat(AmountInput.value) || 0;
 
     const NotesInput = document.querySelector('.InputNotes');
     const DetailNotes = NotesInput.value;
 
     const DuedateInput = document.querySelector('.DateInput');
-    const Duedate = DuedateInput.value;
+    const today = new Date().toISOString().split('T')[0];
+    DuedateInput.setAttribute('max', today); 
 
-   
+    let Duedate = DuedateInput.value;
+
+    if (!Duedate) {
+        Duedate = today;
+        DuedateInput.value = today;
+    }
+
+    
+    const newTotal = ArrayList.reduce((sum, item) => sum + parseFloat(item.Amount), 0) + AmountDue;
+
+    if (newTotal > Income) {
+        const confirmExceed = confirm(`Your budget will be exceeded by ${newTotal - Income}. Do you still wish to add this entry?`);
+        if (!confirmExceed) {
+            return;
+        }
+    }
+
     ArrayList.push({
-        Category: Categoryname, 
+        Category: Categoryname,
         Amount: AmountDue,
-        Notes: DetailNotes, 
+        Notes: DetailNotes,
         DueDate: Duedate
     });
 
     localStorage.setItem('ArrayList', JSON.stringify(ArrayList));
     RenderArrayList();
 
-    
     CategoryInput.value = '';
     AmountInput.value = '';
     NotesInput.value = '';
@@ -86,10 +94,9 @@ function InputselectedAll() {
 }
 
 function deleteItem(index) {
-    ArrayList.splice(index, 1); 
-    localStorage.setItem('ArrayList', JSON.stringify(ArrayList)); 
-    RenderArrayList(); 
+    ArrayList.splice(index, 1);
+    localStorage.setItem('ArrayList', JSON.stringify(ArrayList));
+    RenderArrayList();
 }
-
 
 RenderArrayList();
