@@ -1,0 +1,141 @@
+body {
+    font-family: sans-serif;
+}
+
+.Logo {
+    display: flex;
+    justify-content: center;
+    font-size: clamp(24px, 5vw, 42px); 
+    margin: 20px 0; 
+}
+
+.InputSum {
+    padding: clamp(10px, 2vw, 12px);
+    padding-right: clamp(80px, 10vw, 100px);
+    border-radius: 0px;
+    border: 1px solid black;
+}
+
+.BtnStyle {
+    width: 90%;
+    padding: clamp(10px, 2vw, 12px);
+    border-radius: 3px;
+    border: 1px solid black;
+}
+
+.InputSum::placeholder {
+    font-size: 1rem;
+}
+
+.InputGrid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin-top: 50px;
+    
+}
+
+.ItemGrid {
+    background-color: aliceblue;
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.GridObject {
+    color: white;
+    padding: clamp(8px, 2vw, 12px);
+    text-align: left;
+    border-right: 1px solid rgb(105, 105, 105);
+    background-color: rgb(71, 169, 52);
+    font-weight: bold;
+}
+
+.GridObjectList {
+    border: 1px solid rgb(84, 83, 83);
+    padding: clamp(8px, 1.5vw, 12px);
+}
+
+.GridObjectListDelBtn {
+    border: 1px solid rgb(101, 101, 101);
+    padding: 0px;
+}
+
+.DeleteBtn {
+    color: rgb(255, 255, 255);
+    padding: 0px;
+    background-color: rgb(159, 0, 0);
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+.ResultGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.ResultStyle {
+    background-color: aliceblue;
+    padding: clamp(8px, 2vw, 12px);
+    border: 1px solid rgb(103, 103, 103);
+}
+
+.NewItemList {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.AddBudgetBtn {
+    border: 1px solid black;
+    padding: clamp(10px, 2vw, 12px) 106px; /* Responsive padding */
+}
+
+.AddBtn {
+    background-color: green;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+.AddBtn:hover {
+    opacity: 0.8;
+    transition: 50ms;
+}
+
+.AddBtn:active {
+    opacity: 0.7;
+}
+
+.BudgetControlHolder {
+    display: grid;
+    grid-template-columns: 0.2fr 0.1fr;
+    column-gap: 10px;
+}
+
+.RedColour {
+    color: red;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .InputGrid {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+    .ResultGrid {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+    .Logo {
+        font-size: clamp(20px, 5vw, 36px); 
+    }
+}
+
+@media (max-width: 480px) {
+    .InputGrid, .ResultGrid {
+        grid-template-columns: 1fr; 
+    }
+    .AddBudgetBtn, .AddBtn {
+        width: 100%; 
+        padding: clamp(10px, 5vw, 12px); 
+    }
+}

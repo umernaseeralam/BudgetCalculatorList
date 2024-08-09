@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <title>
+            Budget Calculator
+        </title>
+    </head>
+    <body>
+        <h1  class="Logo" >Budget Calculator</h1>
+        <div class="BudgetControlHolder" ><input placeholder="Add Budget" class="InputSum"  type="number"><button onclick="AddIncome()" class="AddBudgetBtn">Add</button></div>
+        
+
+            <div class="InputGrid" >
+                <input placeholder="Add Category" class="InputCategory , BtnStyle , InputType" type="text">
+                <input placeholder="Add Expense Amount " class="InputExpense , BtnStyle , InputType" type="number">
+                <input placeholder="Add Notes" class="InputNotes , BtnStyle , InputType " type="text">
+                <input class="BtnStyle , DateInput" type="date">
+                <button onclick="
+                InputselectedAll();
+                " class="AddBtn" >Add Item</button>
+            </div>
+            <div class="ItemGrid" >
+                <div class="GridObject" >Category</div>
+                <div class="GridObject" >Amount</div>
+                <div class="GridObject" >Notes</div>
+                <div class="GridObject" >Date</div>
+                <div class="GridObject" >Remove</div>
+            </div>
+
+
+            <div class="NewItemList ">
+            </div>
+
+            <div class="ResultGrid" >
+                <div class="ResultBudget , ResultStyle">Budget:0</div>
+                <div class="ResultExpenseTotal , ResultStyle " >Total Expenses:</div>
+                <div class="ResultRemainder , ResultStyle " >Remaining:</div>
+            </div>
+    </body>
+    <script src="script.js"></script>
+</html>
